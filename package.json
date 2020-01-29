@@ -1,0 +1,25 @@
+{
+  "name": "autotag-action",
+  "version": "1.0.2",
+  "private": true,
+  "description": "Automatically create a tag whenever the version changes in package.json",
+  "main": "lib/main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/butlerlogic/action-autotag.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup"
+  ],
+  "author": "ButlerLogic",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.0.0",
+    "@actions/github": "^1.0.0"
+  }
+}

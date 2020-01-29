@@ -1,0 +1,19 @@
+name: "Rollback"
+description: "Rollback a git release/tag. Useful for cleaning failed build/publish processes."
+author: "Author.io"
+branding:
+  icon: "tag"
+  color: "red"
+inputs:
+  release_id:
+    description: The Github release ID. 
+    required: false
+  tag:
+    description: The tag associated with the release.
+    required: false
+outputs:
+  release_id:
+    description: Returns the ID of the release.
+runs:
+  using: "node12"
+  main: "index.js"
