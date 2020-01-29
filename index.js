@@ -19,20 +19,27 @@ async function run() {
     }
 
     // Retrieve the release ID
+    let data
     if (!id) {
-      const data = await github.repos.getReleaseByTag({
+      data = await github.repos.getReleaseByTag({
         owner,
         repo,
         tag
       })
+    } else {
+      data = await github.repos.getRelease({
+        owner,
+        repo,
+        release_id: id
+      })
+    }
 
-      // Fail if no release is found
-      if (!data || !data.hasOwnProperty('id')) {
-        core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
-        return
-      } else {
-        id = data.id
-      }
+    // Fail if no release is found
+    if (!data || !data.hasOwnProperty('id')) {
+      core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
+      return
+    } else {
+      id = data.id
     }
     
     // API Documentation: https://developer.github.com/v3/repos/releases/#delete-a-release
@@ -43,7 +50,15 @@ async function run() {
       release_id: id
     })
 
-    core.setOutput('id', id)
+    // Delete tag reference
+    const tagresponse = await github.repos.deleteRef({
+      owner,
+      repo,
+      ref: `refs/tags/${data.tag_name}`
+    })
+
+    core.setOutput('release_id', id)
+    core.setOutput('tag', data.tag_name)
   } catch (error) {
     core.setFailed(error.message);
   }
