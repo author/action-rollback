@@ -51,6 +51,7 @@ async function run() {
     
     // API Documentation: https://developer.github.com/v3/repos/releases/#delete-a-release
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-delete-release
+    console.log(`Removing release ${id}`)
     const response = await github.repos.deleteRelease({
       owner,
       repo,
@@ -58,6 +59,7 @@ async function run() {
     })
 
     // Delete tag reference
+    console.log(`Removing reference: refs/tags/${data.tag_name}`)
     const tagresponse = await github.git.deleteRef({
       owner,
       repo,
