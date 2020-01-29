@@ -46,8 +46,7 @@ async function run() {
       }
     }
 
-    // Fail if no release is found
-    
+    console.log(JSON.stringify(data, null, 2))
     
     // API Documentation: https://developer.github.com/v3/repos/releases/#delete-a-release
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-delete-release
