@@ -27,7 +27,7 @@ Configuring the action is straightforward:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-It's a bit easier to understand in context of a complate workflow:
+It's a bit easier to understand in context of a complete workflow:
 
 ```yaml
 name: Publish
