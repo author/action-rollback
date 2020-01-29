@@ -71,9 +71,7 @@ async function run() {
       ref: `tags/${data.tag_name}`
     })
 
-console.log(data)
-    core.debug(`Release: ${data.id.toString()}, Tag: ${data.tag_name.toString()}`)
-    // core.debug(JSON.stringify(tagresponse, null, 2))
+    core.debug(JSON.stringify(tagresponse, null, 2))
     core.setOutput('release_id', data.id.toString())
     core.setOutput('tag', data.tag_name.toString())
   } catch (e) {
