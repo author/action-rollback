@@ -1,4 +1,4 @@
-name: "Rollback"
+name: "Rollback Release"
 description: "Rollback a git release/tag. Useful for cleaning failed build/publish processes."
 author: "Author.io"
 branding:
