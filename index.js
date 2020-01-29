@@ -41,7 +41,7 @@ async function run() {
       }).data
 
       if (!data) {
-        core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
+        core.setFailed(`"${id}" release ID was not found.`)
         return
       }
     }
