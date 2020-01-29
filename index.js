@@ -23,7 +23,7 @@ async function run() {
       const data = await github.repos.getReleaseByTag({
         owner,
         repo,
-        release
+        tag
       })
 
       // Fail if no release is found
