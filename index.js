@@ -61,6 +61,8 @@ async function run() {
       release_id: data.id
     })
 
+    console.log(JSON.stringify(response, null, 2))
+
     // Delete tag reference
     console.log(`Removing reference: tags/${data.tag_name}`)
     const tagresponse = await github.git.deleteRef({
@@ -68,6 +70,8 @@ async function run() {
       repo,
       ref: `tags/${data.tag_name}`
     })
+
+    console.log(JSON.stringify(tagresponse, null, 2))
 
     core.setOutput('release_id', data.id)
     core.setOutput('tag', data.tag_name)
