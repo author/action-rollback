@@ -73,8 +73,8 @@ async function run() {
 
     core.debug(`Release: ${data.id}, Tag: ${data.tag_name}`)
     // core.debug(JSON.stringify(tagresponse, null, 2))
-    // core.setOutput('release_id', data.id)
-    // core.setOutput('tag', data.tag_name)
+    core.setOutput('release_id', data.id)
+    core.setOutput('tag', data.tag_name)
   } catch (e) {
     core.setFailed(e.message)
   }
