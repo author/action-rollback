@@ -25,7 +25,7 @@ async function run() {
         owner,
         repo,
         tag
-      })
+      }).data
       
       if (!data || !data.hasOwnProperty('id')) {
         core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
@@ -38,7 +38,7 @@ async function run() {
         owner,
         repo,
         release_id: id
-      })
+      }).data
 
       if (!data) {
         core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
