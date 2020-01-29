@@ -12,6 +12,23 @@ In the scenario where publishing fails, it may be desirable to rollback the rele
 
 The following is an example `.github/publish.yml` that will rollback a release when a publish fails.
 
+Configuring the action is straightforward:
+
+```yaml
+- name: Rollback Release
+  if: failure()
+  uses: author/action-rollback@stable
+  with:
+    # Using a known release ID
+    id: ${{ steps.create_release.id }}
+    # Using a tag name
+    tag: 'v1.0.1'
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+It's a bit easier to understand in context of a complate workflow:
+
 ```yaml
 name: Publish
 
@@ -51,7 +68,7 @@ jobs:
           REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Rollback Release
-        if: failure() && steps.create_release.outputs.id != '' && failure()
+        if: failure() && steps.create_release.outputs.id != ''
         uses: author/action-rollback@stable
         with:
           # Using a known release ID
