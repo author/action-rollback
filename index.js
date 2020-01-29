@@ -58,7 +58,7 @@ async function run() {
     })
 
     // Delete tag reference
-    const tagresponse = await github.repos.deleteRef({
+    const tagresponse = await github.git.deleteRef({
       owner,
       repo,
       ref: `refs/tags/${data.tag_name}`
