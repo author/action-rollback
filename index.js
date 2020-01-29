@@ -25,25 +25,29 @@ async function run() {
         owner,
         repo,
         tag
-      }).data
-      
-      if (!data || !data.hasOwnProperty('id')) {
+      })
+
+      if (!data) {
         core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
         return
-      } else {
-        id = data.id
       }
+
+      data = data.data
     } else {
       data = await github.repos.getRelease({
         owner,
         repo,
         release_id: id
-      }).data
+      })
+
+      console.log(data)
 
       if (!data) {
-        core.setFailed(`"${id}" release ID was not found.`)
+        core.setFailed(`Release "${id}" was not found.`)
         return
       }
+
+      data = data.data
     }
 
     console.log(JSON.stringify(data, null, 2))
@@ -54,7 +58,7 @@ async function run() {
     const response = await github.repos.deleteRelease({
       owner,
       repo,
-      release_id: id
+      release_id: data.id
     })
 
     // Delete tag reference
@@ -65,7 +69,7 @@ async function run() {
       ref: `refs/tags/${data.tag_name}`
     })
 
-    core.setOutput('release_id', id)
+    core.setOutput('release_id', data.id)
     core.setOutput('tag', data.tag_name)
   } catch (error) {
     core.setFailed(error.message);
