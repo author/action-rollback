@@ -26,21 +26,28 @@ async function run() {
         repo,
         tag
       })
+      
+      if (!data || !data.hasOwnProperty('id')) {
+        core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
+        return
+      } else {
+        id = data.id
+      }
     } else {
       data = await github.repos.getRelease({
         owner,
         repo,
         release_id: id
       })
+
+      if (!data) {
+        core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
+        return
+      }
     }
 
     // Fail if no release is found
-    if (!data || !data.hasOwnProperty('id')) {
-      core.setFailed(`"${tag}" was not found or a release ID is not associated with it.`)
-      return
-    } else {
-      id = data.id
-    }
+    
     
     // API Documentation: https://developer.github.com/v3/repos/releases/#delete-a-release
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-delete-release
