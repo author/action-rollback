@@ -21,14 +21,15 @@ async function run () {
     // Retrieve the release ID
     let data
     if (!id) {
-      data = await github.repos.getReleaseByTag({
-        owner,
-        repo,
-        tag
-      }).catch(e => {
-        core.debug(e)
-        core.warning(e.message)
-      })
+      try {
+        data = await github.repos.getReleaseByTag({
+          owner,
+          repo,
+          tag
+        })
+      } catch (e) {
+        core.warning(`Could not retrieve release for ${tag}: ${e.message}`)
+      }
 
       if (!data) {
         core.debug(JSON.stringify(data, null, 2))
