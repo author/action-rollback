@@ -38,11 +38,11 @@ async function run () {
           const deleteTagResponse = await github.git.deleteRef({
             owner,
             repo,
-            ref: `tags/${data.tag_name}`
+            ref: `tags/${tag}`
           })
 
           if (deleteTagResponse) {
-            core.warning(`Removed ${data.tag_name}, even though there was no associated release.`)
+            core.warning(`Removed ${tag}, even though there was no associated release.`)
             return
           }
         }
