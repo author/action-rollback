@@ -11,7 +11,7 @@ inputs:
   tag:
     description: The tag associated with the release.
     required: false
-  always_delete_tag:
+  delete_orphan_tag:
     description: If the release does not exist but the tag does, setting this to true will remove the tag.
     required: false
 outputs:

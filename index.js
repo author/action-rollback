@@ -30,7 +30,7 @@ async function run () {
       if (!data) {
         core.debug(JSON.stringify(data, null, 2))
 
-        if (core.getInput('always_delete_tag', { required: false }) !== '') {
+        if (core.getInput('delete_orphan_tag', { required: false }) !== '') {
           const deleteTagResponse = await github.git.deleteRef({
             owner,
             repo,

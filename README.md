@@ -83,7 +83,7 @@ jobs:
 
 Only the `id` _**or**_ `tag` need to be specified. If a publish fails, the release will be removed.
 
-### What is the purpose of `always_delete_tag`?
+### What is the purpose of `delete_orphan_tag`?
 
 It's a way to clean up messy processes.
 
