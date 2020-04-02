@@ -12,7 +12,7 @@ async function run () {
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
     const id = core.getInput('release_id', { required: false })
     const tag = core.getInput('tag', { required: false })
-
+    core.debug(`ID: "${id}", Tag: "${tag}"`)
     if (!id && !tag) {
       core.setFailed('At least one of the following inputs must be defined: release_id or tag.')
       return
@@ -32,8 +32,6 @@ async function run () {
       }
 
       if (!data) {
-        core.debug(JSON.stringify(data, null, 2))
-
         if (core.getInput('delete_orphan_tag', { required: false }) !== '') {
           const deleteTagResponse = await github.git.deleteRef({
             owner,
