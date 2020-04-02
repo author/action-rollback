@@ -89,6 +89,7 @@ async function run () {
     core.setOutput('release_id', data.id.toString())
     core.setOutput('tag', data.tag_name.toString())
   } catch (e) {
+    core.warning(e.stack)
     core.setFailed(e.message)
   }
 }
