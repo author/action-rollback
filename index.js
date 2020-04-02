@@ -25,7 +25,7 @@ async function run () {
         owner,
         repo,
         tag
-      })
+      }).catch(core.warning)
 
       if (!data) {
         core.debug(JSON.stringify(data, null, 2))
