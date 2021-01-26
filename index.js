@@ -1,7 +1,7 @@
-const core = require('@actions/core');
-const { GitHub, context } = require('@actions/github');
+const core = require('@actions/core')
+const { GitHub, context } = require('@actions/github')
 
-async function run() {
+async function run () {
   try {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
     const github = new GitHub(process.env.GITHUB_TOKEN)
@@ -10,8 +10,9 @@ async function run() {
     const { owner, repo } = context.repo
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-    const id = core.getInput('release_id', { required: false })
-    const tag = core.getInput('tag', { required: false })
+    const id = process.env.RELEASE_ID || process.env.INPUT_RELEASE_ID || '' // core.getInput('release_id', { required: false })
+    const tag = process.env.TAG || process.env.INPUT_TAG || '' // core.getInput('tag', { required: false })
+    const deleteOrphan = (process.env.INPUT_DELETE_ORPHAN_TAG || '').trim().toLowerCase() === 'true'
 
     if (!id && !tag) {
       core.setFailed('At least one of the following inputs must be defined: release_id or tag.')
@@ -21,14 +22,30 @@ async function run() {
     // Retrieve the release ID
     let data
     if (!id) {
-      data = await github.repos.getReleaseByTag({
-        owner,
-        repo,
-        tag
-      })
+      try {
+        data = await github.repos.getReleaseByTag({
+          owner,
+          repo,
+          tag
+        })
+      } catch (e) {
+        core.warning(`Could not retrieve release for ${tag}: ${e.message}`)
+      }
 
       if (!data) {
-        core.debug(JSON.stringify(data, null, 2))
+        if (deleteOrphan) {
+          const deleteTagResponse = await github.git.deleteRef({
+            owner,
+            repo,
+            ref: `tags/${tag}`
+          })
+
+          if (deleteTagResponse) {
+            core.warning(`Removed ${tag}, even though there was no associated release.`)
+            return
+          }
+        }
+
         core.setFailed(`Tag "${tag}" was not found or a release ID is not associated with it.`)
         return
       }
@@ -51,7 +68,7 @@ async function run() {
     }
 
     core.debug(JSON.stringify(data, null, 2))
-    
+
     // API Documentation: https://developer.github.com/v3/repos/releases/#delete-a-release
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-delete-release
     core.debug(`Removing release ${data.id}`)
@@ -75,6 +92,7 @@ async function run() {
     core.setOutput('release_id', data.id.toString())
     core.setOutput('tag', data.tag_name.toString())
   } catch (e) {
+    core.warning(e.stack)
     core.setFailed(e.message)
   }
 }
