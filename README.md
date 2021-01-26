@@ -20,7 +20,7 @@ Configuring the action is straightforward:
   uses: author/action-rollback@stable
   with:
     # Using a known release ID
-    id: ${{ steps.create_release.id }}
+    release_id: ${{ steps.create_release.id }}
     # Using a tag name
     tag: 'v1.0.1'
     # Always delete the tag, even if a release is not associated with it.
