@@ -1,4 +1,4 @@
-name: "Rollback Release"
+name: "Rollback"
 description: "Rollback a git release/tag. Useful for cleaning failed build/publish processes."
 author: "Author.io"
 branding:
@@ -10,9 +10,6 @@ inputs:
     required: false
   tag:
     description: The tag associated with the release.
-    required: false
-  delete_orphan_tag:
-    description: If the release does not exist but the tag does, setting this to true will remove the tag.
     required: false
 outputs:
   release_id:
