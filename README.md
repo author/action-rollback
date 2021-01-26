@@ -20,11 +20,9 @@ Configuring the action is straightforward:
   uses: author/action-rollback@stable
   with:
     # Using a known release ID
-    release_id: ${{ steps.create_release.id }}
+    id: ${{ steps.create_release.id }}
     # Using a tag name
     tag: 'v1.0.1'
-    #  If the release does not exist but the tag does, setting this to true will remove the tag.
-    delete_orphan_tag: true
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -82,14 +80,6 @@ jobs:
 ```
 
 Only the `id` _**or**_ `tag` need to be specified. If a publish fails, the release will be removed.
-
-### What is the purpose of `delete_orphan_tag`?
-
-It's a way to clean up messy processes.
-
-It may seem unnecessary at first. However; it is useful when a release is removed through other means, leaving an orphan tag.
-
-Technically, this attribute could be used if you only need to rollback tags of any kind (regardless of whether a release exists).
 
 ---
 ## Credits
