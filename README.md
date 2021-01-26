@@ -23,8 +23,8 @@ Configuring the action is straightforward:
     release_id: ${{ steps.create_release.id }}
     # Using a tag name
     tag: 'v1.0.1'
-    # Always delete the tag, even if a release is not associated with it.
-    always_delete_tag: true
+    #  If the release does not exist but the tag does, setting this to true will remove the tag.
+    delete_orphan_tag: true
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
