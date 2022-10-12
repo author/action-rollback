@@ -15,7 +15,6 @@ async function run () {
     const deleteOrphan = (process.env.INPUT_DELETE_ORPHAN_TAG || '').trim().toLowerCase() === 'true'
 
     if (!id && !tag) {
-      console.log({ id, tag, RELEASE_ID: process.env.release_id, INPUT_RELEASE_ID: process.env.INPUT_RELEASE_ID, TAG_ENV: process.env.TAG, INPUT_TAG: process.env.INPUT_TAG })
       core.setFailed('At least one of the following inputs must be defined: release_id or tag.')
       return
     }
@@ -42,7 +41,7 @@ async function run () {
           })
 
           if (deleteTagResponse) {
-            core.warning(`Removed ${tag}, even though there was no associated release.`)
+            core.notice(`Removed ${tag}, even though there was no associated release.`)
             return
           }
         }
