@@ -6,7 +6,7 @@ branding:
   color: "red"
 inputs:
   release_id:
-    description: The Github release ID. 
+    description: The Github release ID.
     required: false
   tag:
     description: The tag associated with the release.
@@ -20,5 +20,5 @@ outputs:
   tag:
     description: The tag associated with the release.
 runs:
-  using: "node18"
+  using: "node16"
   main: "index.js"
