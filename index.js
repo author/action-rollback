@@ -10,11 +10,11 @@ async function run () {
     const { owner, repo } = context.repo
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-    const id = process.env.RELEASE_ID || process.env.INPUT_RELEASE_ID || '' // core.getInput('release_id', { required: false })
+    const id = process.env.RELEASE_ID || process.env.INPUT_RELEASE_ID || core.getInput('release_id', { required: false }) || ''
     const tag = process.env.TAG || process.env.INPUT_TAG || core.getInput('tag', { required: false }) || ''
     const deleteOrphan = (process.env.INPUT_DELETE_ORPHAN_TAG || '').trim().toLowerCase() === 'true'
 
-    if (!id && !tag) {
+    if (id.trim().length && tag.trim().length === 0) {
       core.setFailed('At least one of the following inputs must be defined: release_id or tag.')
       return
     }
