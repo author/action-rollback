@@ -3,10 +3,14 @@
   "version": "1.0.3",
   "private": true,
   "description": "Automatically create a tag whenever the version changes in package.json",
-  "main": "lib/main.js",
+  "main": "main.js",
   "type": "module",
+  "devDependencies": {
+    "esbuild": "^0.15.10"
+  },
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "esbuild --bundle ./src/main.js --platform=node --outdir=dist"
   },
   "repository": {
     "type": "git",
