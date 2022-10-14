@@ -6,11 +6,12 @@
   "main": "main.js",
   "type": "module",
   "devDependencies": {
-    "esbuild": "^0.15.10"
+    "esbuild": "^0.15.10",
+    "rimraf": "^3.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "esbuild --bundle ./index.js --platform=node --outdir=dist"
+    "prepare": "rimraf dist && esbuild --bundle ./index.js --platform=node --outdir=dist"
   },
   "repository": {
     "type": "git",
