@@ -3,19 +3,14 @@
   "version": "1.0.3",
   "private": true,
   "description": "Automatically create a tag whenever the version changes in package.json",
-  "module": {
-    ".": {
-      "import": "index.js"
-    }
-  },
-  "type": "module",
+  "main": "index.js",
   "devDependencies": {
     "esbuild": "^0.15.10",
     "rimraf": "^3.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "rimraf dist && esbuild --bundle ./index.js --format=esm --platform=node --outdir=dist"
+    "prepare": "rimraf dist && esbuild --bundle ./index.js --format=cjs --platform=node --outdir=dist"
   },
   "repository": {
     "type": "git",

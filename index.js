@@ -1,5 +1,7 @@
-import { setFailed, warning, notice, debug, setOutput } from '@actions/core'
-import { GitHub, context } from '@actions/github'
+const actionscore = require('@actions/core')
+const { setFailed, warning, notice, debug, setOutput } = actionscore
+const actionsgithub = require('@actions/github')
+const { GitHub, context } = actionsgithub
 
 async function run () {
   try {
