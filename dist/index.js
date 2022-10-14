@@ -19241,11 +19241,11 @@ var require_mode = __commonJS({
 var require_isexe = __commonJS({
   "node_modules/isexe/index.js"(exports, module) {
     var fs = __require("fs");
-    var core2;
+    var core;
     if (process.platform === "win32" || global.TESTING_WINDOWS) {
-      core2 = require_windows();
+      core = require_windows();
     } else {
-      core2 = require_mode();
+      core = require_mode();
     }
     module.exports = isexe;
     isexe.sync = sync;
@@ -19268,7 +19268,7 @@ var require_isexe = __commonJS({
           });
         });
       }
-      core2(path, options || {}, function(er, is) {
+      core(path, options || {}, function(er, is) {
         if (er) {
           if (er.code === "EACCES" || options && options.ignoreErrors) {
             er = null;
@@ -19280,7 +19280,7 @@ var require_isexe = __commonJS({
     }
     function sync(path, options) {
       try {
-        return core2.sync(path, options || {});
+        return core.sync(path, options || {});
       } catch (er) {
         if (options && options.ignoreErrors || er.code === "EACCES") {
           return false;
@@ -24641,7 +24641,7 @@ var require_github = __commonJS({
 });
 
 // index.js
-var core = __toESM(require_core(), 1);
+var import_core = __toESM(require_core(), 1);
 var import_github = __toESM(require_github(), 1);
 async function run() {
   try {
@@ -24651,7 +24651,7 @@ async function run() {
     const tag = process.env.TAG || process.env.INPUT_TAG || "";
     const deleteOrphan = (process.env.INPUT_DELETE_ORPHAN_TAG || "").trim().toLowerCase() === "true";
     if (!id && !tag) {
-      core.setFailed("At least one of the following inputs must be defined: release_id or tag.");
+      (0, import_core.setFailed)("At least one of the following inputs must be defined: release_id or tag.");
       return;
     }
     let data;
@@ -24663,7 +24663,7 @@ async function run() {
           tag
         });
       } catch (e) {
-        core.warning(`Could not retrieve release for ${tag}: ${e.message}`);
+        (0, import_core.warning)(`Could not retrieve release for ${tag}: ${e.message}`);
       }
       if (!data) {
         if (deleteOrphan) {
@@ -24673,11 +24673,11 @@ async function run() {
             ref: `tags/${tag}`
           });
           if (deleteTagResponse) {
-            core.notice(`Removed ${tag}, even though there was no associated release.`);
+            (0, import_core.notice)(`Removed ${tag}, even though there was no associated release.`);
             return;
           }
         }
-        core.setFailed(`Tag "${tag}" was not found or a release ID is not associated with it.`);
+        (0, import_core.setFailed)(`Tag "${tag}" was not found or a release ID is not associated with it.`);
         return;
       }
       data = data.data;
@@ -24688,32 +24688,32 @@ async function run() {
         release_id: id
       });
       if (!data) {
-        core.debug(JSON.stringify(data, null, 2));
-        core.setFailed(`Release "${id}" was not found.`);
+        (0, import_core.debug)(JSON.stringify(data, null, 2));
+        (0, import_core.setFailed)(`Release "${id}" was not found.`);
         return;
       }
       data = data.data;
     }
-    core.debug(JSON.stringify(data, null, 2));
-    core.debug(`Removing release ${data.id}`);
+    (0, import_core.debug)(JSON.stringify(data, null, 2));
+    (0, import_core.debug)(`Removing release ${data.id}`);
     const response = await github.repos.deleteRelease({
       owner,
       repo,
       release_id: data.id
     });
-    core.debug(JSON.stringify(response, null, 2));
-    core.debug(`Removing reference: tags/${data.tag_name}`);
+    (0, import_core.debug)(JSON.stringify(response, null, 2));
+    (0, import_core.debug)(`Removing reference: tags/${data.tag_name}`);
     const tagresponse = await github.git.deleteRef({
       owner,
       repo,
       ref: `tags/${data.tag_name}`
     });
-    core.debug(JSON.stringify(tagresponse, null, 2));
-    core.setOutput("release_id", data.id.toString());
-    core.setOutput("tag", data.tag_name.toString());
+    (0, import_core.debug)(JSON.stringify(tagresponse, null, 2));
+    (0, import_core.setOutput)("release_id", data.id.toString());
+    (0, import_core.setOutput)("tag", data.tag_name.toString());
   } catch (e) {
-    core.warning(e.stack);
-    core.setFailed(e.message);
+    (0, import_core.warning)(e.stack);
+    (0, import_core.setFailed)(e.message);
   }
 }
 run();
