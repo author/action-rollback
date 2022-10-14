@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "rimraf dist && esbuild --bundle ./index.js --platform=node --outdir=dist"
+    "prepare": "rimraf dist && esbuild --bundle ./index.js --format=esm --platform=node --outdir=dist"
   },
   "repository": {
     "type": "git",
