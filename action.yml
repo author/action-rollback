@@ -20,5 +20,5 @@ outputs:
   tag:
     description: The tag associated with the release.
 runs:
-  using: "node18"
+  using: "node20"
   main: "dist/index.js"
